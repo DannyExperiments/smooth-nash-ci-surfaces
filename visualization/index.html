@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Differential planes at the projective boundary</title>
+<style>
+:root{color-scheme:dark;--bg:#0b1525;--panel:#112339;--edge:#34506b;--text:#eff7fc;--muted:#bed0dd;--row:#69e7c7;--column:#ffba73}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:1rem/1.55 system-ui,sans-serif}
+main{max-width:68rem;margin:auto;padding:clamp(1rem,4vw,3rem)}
+h1{font-size:clamp(1.72rem,4.7vw,3rem);line-height:1.13;margin:0 0 .6rem}
+p{margin:.4rem 0 1rem}
+.intro,.scope{max-width:70ch;color:var(--muted)}
+.content{display:grid;grid-template-columns:minmax(0,1fr) minmax(16rem,.82fr);gap:1.1rem;align-items:start}
+figure{margin:0;background:var(--panel);border:1px solid var(--edge);border-radius:1rem;overflow:hidden}
+canvas{display:block;width:100%;height:auto;aspect-ratio:1.17}
+figcaption{padding:.1rem 1rem 1rem;line-height:1.5;color:var(--muted)}
+.key{display:inline-block;margin-right:.8rem;white-space:nowrap}
+.key::before{content:"";display:inline-block;width:.7rem;height:.7rem;border-radius:50%;background:currentColor;margin-right:.3rem}
+.row{color:var(--row)}
+.column{color:var(--column)}
+aside{min-width:0;background:var(--panel);border:1px solid var(--edge);padding:1rem;border-radius:1rem}
+label{display:block;color:var(--muted);font-weight:600;margin-bottom:.25rem}
+select,input[type=range]{width:100%;margin:0 0 .8rem;min-height:2.6rem;color:var(--text);font:inherit;accent-color:var(--row)}
+select{border:1px solid var(--edge);border-radius:.45rem;padding:.25rem .55rem;background:#172c45}
+table{width:100%;border-collapse:collapse;margin:.5rem 0}
+th,td{border-top:1px solid var(--edge);padding:.3rem 0;text-align:left;vertical-align:top}
+td{padding-left:.55rem;font-variant-numeric:tabular-nums}
+output{display:block;font-weight:700;padding:.5rem 0 .15rem}
+.scope{margin-top:1.1rem}
+@media(max-width:700px){.content{grid-template-columns:1fr}main{padding:1rem}}
+</style>
+<main>
+<h1>Differential planes at the projective boundary</h1>
+<p class="intro">At each example, one row equation and one column equation vanish for every payoff table. Their differentials can still supply two independent directions.</p>
+<div class="content">
+<figure>
+<canvas id="plot" width="720" height="615" role="img" aria-label="Three-dimensional view of the two differential planes"></canvas>
+<figcaption><span class="key row">Row plane</span><span class="key column">Column plane</span><span class="key">Shared line</span><br>Arrows show the selected differential pair.</figcaption>
+</figure>
+<aside>
+<label for="point">Boundary point</label>
+<select id="point"><option value="coordinate">Coordinate point</option><option value="checkerboard">Checkerboard point</option></select>
+<label for="pair">Payoff differential pair</label>
+<select id="pair"><option value="independent">Independent vectors</option><option value="parallel">Both on the shared line</option><option value="zero">One vector is zero</option></select>
+<label for="angle">Rotate the view</label>
+<input type="range" id="angle" min="0" max="359" value="55">
+<table aria-label="Exact differential vectors"><tbody>
+<tr><th scope="row">Matrix</th><td id="matrix"></td></tr>
+<tr><th scope="row" class="row">Row span</th><td id="rowSpan"></td></tr>
+<tr><th scope="row" class="column">Column span</th><td id="colSpan"></td></tr>
+<tr><th scope="row">Shared line</th><td id="shared"></td></tr>
+<tr><th scope="row">Example pair</th><td id="vectors"></td></tr>
+</tbody></table>
+<output id="rank" aria-live="polite"></output>
+</aside>
+</div>
+<p class="scope">The chart fixes the top-left matrix entry at 1 and names the remaining entries x, y and z. These plots show real coefficient slices of the complex differential spaces. Rank loss imposes two conditions in the four-dimensional pair space. The general proof also treats the single-player base strata, the other edge factor, and the nonbase equations.</p>
+</main>
+<script>
+"use strict";
+const byId = id => document.getElementById(id);
+const point = byId("point"), pair = byId("pair"), angle = byId("angle"), canvas = byId("plot");
+const ctx = canvas.getContext("2d");
+const x = [1,0,0], y = [0,1,0], z = [0,0,1], origin = [0,0,0];
+const drafts = {
+  coordinate: {matrix:"(1, 0; 0, 0)", row:[y,z], col:[x,z], line:z, rowText:"dy, dz", colText:"dx, dz", commonText:"dz", sample:["dy","dx"]},
+  checkerboard: {matrix:"(1, −1; −1, 1)", row:[x,[0,1,1]], col:[y,[1,0,1]], line:[1,1,1], rowText:"dx, dy + dz", colText:"dy, dx + dz", commonText:"dx + dy + dz", sample:["dx","dy"]},
+};
+const teal = "#69e7c7", amber = "#ffba73", white = "#eff7fc";
+const scale = (v,k) => v.map(t => t*k);
+const add = (u,v) => u.map((t,i) => t+v[i]);
+const unit = v => scale(v,1/(Math.hypot(...v)||1));
+
+function render() {
+  const data = drafts[point.value];
+  const turn = Number(angle.value)*Math.PI/180, tilt = 0.55;
+  const project = ([a,b,c]) => [
+    canvas.width/2+168*(a*Math.cos(turn)+b*Math.sin(turn)),
+    canvas.height/2-168*(c*Math.cos(tilt)-(-a*Math.sin(turn)+b*Math.cos(turn))*Math.sin(tilt))
+  ];
+  const projectedPath = (points, closed=false) => {
+    ctx.beginPath();
+    points.forEach((v,i) => { const q=project(v); i ? ctx.lineTo(...q) : ctx.moveTo(...q); });
+    if (closed) ctx.closePath();
+  };
+  function line(points,color,width,dash=[]) {
+    projectedPath(points);
+    ctx.strokeStyle=color; ctx.lineWidth=width;
+    ctx.setLineDash(dash); ctx.stroke(); ctx.setLineDash([]);
+  }
+  function plane(basis,stroke,fill) {
+    const [u,v] = basis.map(unit);
+    const corner = (a,b) => add(scale(u,a),scale(v,b));
+    projectedPath([corner(-1,-1),corner(1,-1),corner(1,1),corner(-1,1)], true);
+    ctx.fillStyle=fill; ctx.fill();
+    ctx.strokeStyle=stroke; ctx.lineWidth=3; ctx.stroke();
+    [u,v].forEach(w => line([scale(w,-1),w],stroke,1.25));
+  }
+  function arrow(v,color) {
+    if (!Math.hypot(...v)) return;
+    const start=project(origin), end=project(v);
+    const t=Math.atan2(end[1]-start[1],end[0]-start[0]);
+    line([origin,v],"#0b1525",11);
+    line([origin,v],color,6);
+    ctx.beginPath(); ctx.moveTo(...end);
+    ctx.lineTo(end[0]-18*Math.cos(t-.55),end[1]-18*Math.sin(t-.55));
+    ctx.lineTo(end[0]-18*Math.cos(t+.55),end[1]-18*Math.sin(t+.55));
+    ctx.closePath(); ctx.fillStyle=color; ctx.fill();
+  }
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  const axes = [x,y,z], axisText=["dx","dy","dz"];
+  axes.forEach(u => line([scale(u,-1.37),scale(u,1.47)],"#45627a",2,[7,9]));
+  plane(data.row,teal,"rgba(47,203,177,.23)");
+  plane(data.col,amber,"rgba(244,140,70,.24)");
+  const share = scale(unit(data.line),1.36);
+  line([scale(share,-1),share],white,4);
+  const u = pair.value==="parallel" ? data.line : data.row[0];
+  const v = pair.value==="parallel" ? scale(data.line,-1) : pair.value==="zero" ? origin : data.col[0];
+  arrow(u,teal);
+  arrow(v,amber);
+  const center=project(origin);
+  ctx.beginPath(); ctx.arc(...center,5,0,2*Math.PI); ctx.fillStyle=white; ctx.fill();
+  ctx.font="700 26px system-ui"; ctx.textAlign="center"; ctx.textBaseline="middle";
+  axes.forEach((axis,i) => {
+    const q=project(scale(axis,1.52));
+    ctx.strokeStyle="#112339"; ctx.lineWidth=5;
+    ctx.strokeText(axisText[i],...q);
+    ctx.fillStyle=white; ctx.fillText(axisText[i],...q);
+  });
+  byId("matrix").textContent=data.matrix;
+  byId("rowSpan").textContent=data.rowText;
+  byId("colSpan").textContent=data.colText;
+  byId("shared").textContent=data.commonText;
+  byId("vectors").textContent = pair.value==="parallel" ? data.commonText+", −("+data.commonText+")" :
+    pair.value==="zero" ? data.sample[0]+", 0" : data.sample.join(", ");
+  const rank = pair.value==="independent" ? "Rank 2 · Independent pair" : "Rank 1 · Dependent pair";
+  if (byId("rank").textContent!==rank) byId("rank").textContent=rank;
+  canvas.setAttribute("aria-label",point.selectedOptions[0].text+". "+rank);
+}
+[point,pair,angle].forEach(control => control.addEventListener("input",render));
+render();
+</script>
+</html>

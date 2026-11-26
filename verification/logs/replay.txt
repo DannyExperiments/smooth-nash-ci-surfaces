@@ -1,0 +1,4 @@
+F_3: 5 mixed points, 4 rank-one points, 6 open-line points, 25 outside; 21 of 81 mixed pairs dependent.
+F_5: 5 mixed points, 4 rank-one points, 18 open-line points, 129 outside; 65 of 625 mixed pairs dependent.
+F_7: 5 mixed points, 4 rank-one points, 30 open-line points, 361 outside; 133 of 2401 mixed pairs dependent.
+PASS: local base geometry and rank-loss diagnostics.

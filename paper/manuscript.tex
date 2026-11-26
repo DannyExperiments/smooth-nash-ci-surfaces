@@ -1,0 +1,252 @@
+\documentclass[11pt,a4paper]{amsart}
+\usepackage[T1]{fontenc}
+\usepackage{amssymb}
+\usepackage[margin=1in]{geometry}
+\usepackage[hidelinks]{hyperref}
+\DeclareFontShape{OT1}{cmr}{bx}{n}{<-> cmbx10}{}
+\DeclareMathSizes{8}{8}{8}{8}
+\DeclareMathSizes{9}{9}{8}{8}
+\DeclareMathSizes{10.95}{10.95}{8}{8}
+\urlstyle{same}
+\hypersetup{pdftitle={Smoothness of Nash CI surfaces for two disjoint edges}}
+\newtheorem{theorem}{Theorem}
+\newcommand{\PP}{\mathbb P}
+\newcommand{\CC}{\mathbb C}
+\title{Smoothness of Nash CI surfaces for two disjoint edges}
+
+\date{}
+\begin{document}
+\begin{abstract}
+For a binary game whose conditional-independence graph consists of two disjoint
+edges and any number of isolates, we prove that the Nash conditional-independence
+variety is a smooth complex projective surface for generic payoff tables. The
+reduced payoff equations are known. We prove full Jacobian rank on their fixed
+base loci by stratifying the edge factors and bounding the codimension of
+dependence among the normal differentials.
+\end{abstract}
+\maketitle
+
+\section{Statement and prior work}
+
+Consider $n=r+4$ players with two actions each. The graph specifies the
+factorization of the joint strategy. Each player's payoff array is independently
+arbitrary on the $2^n$ pure action profiles, and we work over $\CC$.
+In tensor coordinates $p_{\mathbf a}$, the Nash conditional-independence
+variety is the projective closure of the equal-conditional-payoff rank equations
+on the graphical model off the hyperplanes $p_{\mathbf a}=0$ and
+$\sum_{\mathbf a}p_{\mathbf a}=0$ \cite{game,totally}. We take the reduced closure.
+
+\begin{theorem}\label{thm:main}
+For every integer $r\geq0$, there is a nonempty Zariski open subset of the
+affine space of payoff arrays on which the Nash CI variety for two disjoint
+edges and $r$ isolated vertices is a smooth complex projective surface.
+\end{theorem}
+
+This is the binary surface case of Sendra-Arranz's Question 3.6.1
+\cite[p.~196]{thesis}, as isolated in catalog Q220 \cite{catalog}.
+Portakal and Sendra-Arranz established smoothness of the one-edge curves
+\cite[Theorem~17]{curve}. Their surface work gives the binary defining
+equations, the dimension, connectedness and the general-type conclusion
+conditional on smoothness \cite{game}. Bouyer, Portakal and Sendra-Arranz
+established generic irreducibility of the cluster-graph family
+\cite[Theorem~4.4]{totally}. Their smoothness result excludes the tensor-coordinate
+and total-mass hyperplanes \cite[Theorem~3.7]{totally}. Theorem~\ref{thm:main}
+includes all points of the complex projective closure.
+
+\section{Payoff equations}
+
+The closed graphical model is the Segre embedding of
+\[
+M=\PP^3_A\times\PP^3_B\times(\PP^1)^r.
+\]
+Here $A$ and $B$ are $2$ by $2$ matrices of homogeneous coordinates, one for
+each edge. We call the two players in a factor its row and column players.
+Write $R_0,R_1$ for the row sums in $A$. For each $i$ let $L_i$ be the
+linear combination, with coefficients from the row player's payoff table for
+action $i$, of entries of row $i$ multiplied by one coordinate from each
+other factor. The reduced row-player equation is
+\[
+f=R_1 L_0-R_0 L_1=0.
+\]
+The column-player equation is its transpose with a separate payoff array.
+The equations on $B$ are analogous. An isolated player's reduced equation is
+the difference of the two payoff forms on the other factors and is
+multilinear there. These equations follow by cancelling the common
+factors in the conditional payoff rank conditions on the indicated chart.
+They are also the binary case of the equations in \cite[Proposition~4.3]{totally}.
+
+At any fixed point of the other factors there is a nonzero coordinate
+monomial, so the coefficients of $L_0,L_1$ as supported linear forms in
+the edge matrix range independently over all such coefficients. For an
+isolated player the same observation makes evaluation of its equation
+surjective at every projective point. The $n$ equations use independent
+payoff blocks. Let $T$ be the full affine parameter space, $Y_t$ the
+zero scheme on $M$ at $t\in T$, and $D$ the pullback of the union of the
+coordinate and total-mass hyperplanes. Each defining linear form is
+nonzero on $M$, so $\dim D\leq \dim M-1$. Off $D$ the original rank
+equations agree with the reduced equations.
+
+\section{Base strata and their differentials}
+
+For a single edge factor, the row player's base locus consists of the
+two lines where one row is zero and the line where both row sums are
+zero. Indeed, evaluation vanishes for every payoff array precisely
+when $R_1$ times row $0$ and $R_0$ times row $1$ both vanish.
+The column player's lines are obtained by transposition.
+This specializes the linear series analyzed in \cite[Lemmas~7--8]{game}.
+We partition the factor into the complement of the six lines, their
+open parts with intersections removed, and the intersection points.
+
+A same-player intersection occurs when one row is zero and the other
+row sums to zero, or the transpose. There are four such points. A
+row-column intersection is one of the four single-entry coordinate
+points or the checkerboard point represented by
+$\left(\begin{smallmatrix}1&-1\\-1&1\end{smallmatrix}\right)$.
+A zero row together with both column sums zero forces every entry to
+vanish, and the transposed statement is the same. This exhausts the
+intersections and rules out triple intersections. The codimension
+$c$ and number $b$ of base equations in the factor are
+\[
+\begin{array}{c|cc}
+\text{stratum} & c & b\\ \hline
+\text{complement} & 0&0\\
+\text{open line} & 2&1\\
+\text{same-player point} & 3&1\\
+\text{row-column point} & 3&2.
+\end{array}
+\]
+We use products of these strata with all singleton factors. Both $c$
+and $b$ add under products.
+
+A base equation vanishes identically as the other factors vary with
+its own base point fixed, so its differential has no contribution
+from the other factors. It annihilates the tangent of the stratum.
+The following images are calculated by varying the base player's payoff block.
+
+\begin{itemize}
+\item On an open zero-row line, say row $0$ is zero, $R_1\ne 0$ and
+$df=R_1\,dL_0-L_1\,dR_0$, giving the whole two-dimensional conormal.
+On the open row-sum line, $df=L_0\,dR_1-L_1\,dR_0$; the two nonzero
+rows let us vary $L_0,L_1$ independently, giving the whole conormal.
+\item At a same-player point with row $0$ zero and $R_1=0$,
+$df=-L_1\,dR_0$ has one-dimensional image since row $1$ is nonzero.
+\item At a row-column coordinate point write
+$A=\left(\begin{smallmatrix}1&x\\y&z\end{smallmatrix}\right)$
+after permuting rows and columns. At $(x,y,z)=(0,0,0)$ the row and
+column differential images are $\langle dy,dz\rangle$ and
+$\langle dx,dz\rangle$. At the checkerboard point they are
+$\langle dx,dy+dz\rangle$ and $\langle dy,dx+dz\rangle$.
+In each case the planes are distinct and the two payoff blocks attain
+them independently.
+\end{itemize}
+
+\section{Generic rank across the strata}
+
+Fix a stratum $S$ with codimension $c$ and $b$ base equations. The
+incidence of points of $S$ and payoffs satisfying the $n-b$ nonbase
+equations is a vector bundle over $S$. The evaluation from the
+trivial payoff bundle to the sum of the $n-b$ equation line bundles
+is surjective at each point by the independent blocks and the
+definition of $S$. Its kernel is the incidence bundle. Hence the
+incidence is smooth of dimension
+\[
+\dim S+\dim T-(n-b)=\dim T+2-c+b.
+\]
+Generic smoothness in characteristic zero, applied over the target
+$T$, gives a nonempty open set of $t$ where the fibers of the
+incidence projection are empty or smooth of dimension $2-c+b$.
+For a nondominant stratum we remove the closure of the image.
+On a dominant stratum the projection differential is onto over
+this open set. The incidence tangent vectors $(v,w)$ satisfy
+$F_pv+F_tw=0$ for the nonbase equation derivatives, and $F_t$ is onto.
+Thus surjectivity of the projection implies $F_p$ is onto. The
+nonbase differentials restricted to the tangent of $S$ are
+independent everywhere on the generic fiber.
+
+It remains to check the normal differentials of the base equations.
+For a fixed point of the stratum, none of the incidence equations
+constrains the base players' payoff blocks. A base differential on
+an open line vanishes in codimension two in its block; at a
+same-player intersection it vanishes in codimension one. At a
+row-column point the bad ordered pairs in the product of the two
+distinct two-planes consist of pairs with a zero vector and pairs
+both in the common line. Each of these three pieces has codimension
+two. The independently surjective differential maps preserve their
+codimensions under inverse image.
+
+If a factor contributes an open line or a row-column point, then
+$c-b\geq 1$ for the product stratum. The incidence dimension is
+at most $\dim T+1$, so the corresponding rank-loss locus, of
+relative codimension two, has dimension at most $\dim T-1$.
+If a factor contributes a same-player point, then $c-b\geq2$ and
+the incidence dimension is at most $\dim T$; the corresponding
+bad locus has relative codimension one. Again its dimension is at
+most $\dim T-1$. There are finitely many strata and each bad locus
+is algebraic on its stratum. The closures of their projections
+therefore remove only a proper closed subset of $T$.
+
+Outside the excluded subsets the base differentials are independent.
+Different edge factors occupy different cotangent summands, and
+within each factor we have excluded its dependence locus. They
+annihilate the stratum tangent, while the nonbase differentials
+restrict to an independent set there. All $n$ differentials are
+independent at each point of $Y_t$. The Jacobian criterion gives
+smoothness and pure dimension $\dim M-n=2$ whenever $Y_t$ is nonempty.
+
+\section{Nonemptiness and closure}
+
+Write $h_A,h_B,z_1,\ldots,z_r$ for the hyperplane classes and
+$Z=\sum_i z_i$. The first four equation classes are two copies each
+of $2h_A+h_B+Z$ and $h_A+2h_B+Z$. The isolated-player classes
+are $h_A+h_B+Z-z_i$. Their product in the Chow ring is nonzero.
+For $r=0$ it contains $h_A^2h_B^2$, and for $r=1$ it contains
+$h_A^3h_B^2$. For $r\geq2$ choose the other singleton class in
+each factor by a cyclic shift to get
+$h_A^2h_B^2\prod_i z_i$. These monomials survive the truncations
+of the Chow ring and every coefficient is nonnegative. A
+nowhere-vanishing section of the direct sum of the equation
+line bundles would give zero top Chern class. Thus $Y_t$ is
+nonempty. Nonemptiness also follows from \cite[Theorem~5.4]{totally}.
+
+A stratum with a base equation has $c-b\geq1$ and so its generic
+fiber has dimension at most one. On the zero-base stratum, restrict
+the incidence bundle to $D$. The dimension of the resulting
+incidence is at most $\dim T+1$, so its generic fiber has dimension
+at most one by the fiber dimension theorem. Thus no component
+of $Y_t$ lies in $D$. Since $Y_t$ is reduced and the Segre
+embedding is closed, the defining projective closure is $Y_t$ itself.
+This proves Theorem~\ref{thm:main}.
+
+\section*{Scope}
+The result concerns the projective complex variety. The positive
+real equilibrium locus and its semialgebraic boundary are separate
+questions. The proof controls this binary two-edge family. For
+irreducibility we refer to \cite[Theorem~4.4]{totally}.
+
+\section*{Review and disclosure}
+Internally reviewed, not peer reviewed. Under human direction,
+ChatGPT Astra 6.2 (OpenAI) generated the discovery proof and its
+research packet. Claude Opus 5.5 (Anthropic) assisted with earlier
+mathematical and literature audits. OpenAI Codex performed the mathematical review and
+revised the paper. GPT-6.2 Sol assisted with literature searches and
+release preparation. DannyExperiments maintains the repository and
+is the preferred citation identity. No AI system is proposed as an
+author.
+
+\begin{thebibliography}{9}
+\bibitem{thesis} J. Sendra-Arranz, \emph{Algebraic Methods in Reconstruction of
+Varieties and Game Theory}, doctoral dissertation, Universit\"at T\"ubingen (2025), \S 3.6.
+\href{https://publikationen.uni-tuebingen.de/xmlui/handle/10900/160061}{Institutional record}.
+\bibitem{catalog} Open Problems Catalog, Q220.
+\href{https://github.com/10m-u/open-problems-catalog/blob/ca8d4d44ba3db527f19f28928c240168f545ecfe/problems/game_theory/noncooperative-games-equilibrium-theory.md\#q220}{Pinned entry}.
+\bibitem{curve} I. Portakal and J. Sendra-Arranz, Nash conditional
+independence curve, \emph{J. Symbolic Comput.} 122 (2024), 102255.
+\href{https://doi.org/10.1016/j.jsc.2023.102255}{Journal article}.
+\bibitem{game} I. Portakal and J. Sendra-Arranz, Game theory of undirected
+graphical models, \emph{J. Algebra} 666 (2025), 574--606.
+\href{https://doi.org/10.1016/j.jalgebra.2024.12.004}{Journal article}.
+\bibitem{totally} M. Bouyer, I. Portakal and J. Sendra-Arranz, Totally
+mixed conditional independence equilibria of generic games (2025).
+\href{https://arxiv.org/abs/2511.11467v1}{arXiv:2511.11467v1}.
+\end{thebibliography}
+\end{document}

@@ -1,0 +1,28 @@
+{
+  "title": "Smoothness of Nash CI surfaces for two disjoint edges",
+  "upload_type": "software",
+  "creators": [
+    {
+      "name": "DannyExperiments"
+    }
+  ],
+  "description": "<p>For binary games whose conditional-independence graph consists of two disjoint edges and any number of isolated vertices, the Nash CI variety is a smooth complex projective surface for generic unrestricted payoff tables. The proof controls the Jacobian on the fixed boundary base strata. Earlier work established the defining equations, irreducibility and smoothness off the coordinate and total-mass hyperplanes.</p><p>Includes a paper, source, proof outline, internal review, exact local replay and offline teaching explorer. Internally reviewed, not peer reviewed.</p><p>Under human direction, ChatGPT Astra 6.2 (OpenAI) generated the discovery proof and its research packet. Claude Opus 5.5 (Anthropic) assisted with earlier mathematical and literature audits. OpenAI Codex performed the mathematical review and revised the paper. GPT-6.2 Sol assisted with literature searches and release preparation. DannyExperiments maintains the repository and is the preferred citation identity. No AI system is proposed as an author.</p>",
+  "keywords": [
+    "conditional independence equilibria",
+    "algebraic game theory",
+    "projective surfaces",
+    "generic smoothness"
+  ],
+  "license": "other-closed",
+  "notes": "All rights reserved. Publicly downloadable files are supplied without a repository-wide reuse license.",
+  "publication_date": "2026-11-27",
+  "version": "1.0.0",
+  "access_right": "open",
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/DannyExperiments/smooth-nash-ci-surfaces/releases/tag/v1.0.0",
+      "relation": "isSupplementTo",
+      "resource_type": "software"
+    }
+  ]
+}
