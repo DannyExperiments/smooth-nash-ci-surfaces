@@ -2,6 +2,7 @@
 """Check the candidate inventory, SHA-256 hashes and deterministic archives."""
 from hashlib import sha256
 from pathlib import Path, PurePosixPath
+import os
 import re
 from zipfile import ZIP_DEFLATED, ZipFile, ZipInfo
 
@@ -25,13 +26,18 @@ def digest(data):
 
 def public_files():
     files = []
-    for entry in ROOT.rglob("*"):
-        name = entry.relative_to(ROOT).as_posix()
-        if name.startswith((".git/", "release/evidence/")) or "__pycache__" in entry.parts:
-            continue
-        if entry.is_file():
+    for parent, dirs, names in os.walk(ROOT):
+        folder = Path(parent)
+        dirs[:] = [d for d in dirs if d != "__pycache__" and
+                   (folder / d).relative_to(ROOT).as_posix() not in
+                   {".git", "release/evidence", "formal/closing/.lake"}]
+        for d in dirs:
+            assert not (folder / d).is_symlink(), f"Symlink: {folder / d}"
+        for name in names:
+            entry = folder / name
             assert not entry.is_symlink(), f"Symlink: {name}"
-            files.append(name)
+            if entry.is_file():
+                files.append(entry.relative_to(ROOT).as_posix())
     return sorted(files)
 
 

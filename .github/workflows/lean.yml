@@ -1,0 +1,34 @@
+name: Partial Lean verification
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Set up pinned Lean
+        uses: leanprover/lean-action@38fbc41a8c28c4cbaec22d7f7de508ec2e7c0dd9
+        with:
+          lake-package-directory: formal/closing
+          auto-config: false
+          build: false
+          test: false
+          lint: false
+          use-mathlib-cache: false
+          use-github-cache: false
+      - name: Retrieve the pinned library modules for mixed base-locus classification
+        working-directory: formal/closing
+        run: |
+          lake exe cache get Mathlib.Algebra.Field.Basic Mathlib.Tactic.Ring
+      - name: Kernel-check the proof and audit its axioms
+        run: python3 formal/closing/verify.py

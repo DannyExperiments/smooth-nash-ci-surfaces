@@ -7,6 +7,7 @@ Is the Nash conditional-independence variety a smooth complex projective surface
 [Paper PDF](paper/manuscript.pdf) · [LaTeX source](paper/manuscript.tex) · [Catalog Q220](https://github.com/10m-u/open-problems-catalog/blob/ca8d4d44ba3db527f19f28928c240168f545ecfe/problems/game_theory/noncooperative-games-equilibrium-theory.md#q220) · [Sendra-Arranz's thesis, §3.6](https://tobias-lib.ub.uni-tuebingen.de/xmlui/bitstream/handle/10900/160061/Thesis.pdf?isAllowed=y&sequence=1)
 
 [![Repository verification](https://github.com/DannyExperiments/smooth-nash-ci-surfaces/actions/workflows/verify.yml/badge.svg?branch=main)](https://github.com/DannyExperiments/smooth-nash-ci-surfaces/actions/workflows/verify.yml)
+[![Partial Lean verification](https://github.com/DannyExperiments/smooth-nash-ci-surfaces/actions/workflows/lean.yml/badge.svg?branch=main)](https://github.com/DannyExperiments/smooth-nash-ci-surfaces/actions/workflows/lean.yml)
 [![Replay verification](https://github.com/DannyExperiments/smooth-nash-ci-surfaces/actions/workflows/replay.yml/badge.svg?branch=main)](https://github.com/DannyExperiments/smooth-nash-ci-surfaces/actions/workflows/replay.yml)
 [![PDF build](https://github.com/DannyExperiments/smooth-nash-ci-surfaces/actions/workflows/pdf.yml/badge.svg?branch=main)](https://github.com/DannyExperiments/smooth-nash-ci-surfaces/actions/workflows/pdf.yml)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24569556.svg)](https://doi.org/10.5281/zenodo.24569556)
@@ -32,3 +33,7 @@ The replay independently enumerates projective base strata and local derivative 
 DannyExperiments is the preferred citation identity. [Citation metadata](CITATION.cff) · [Research disclosure](AI_DISCLOSURE.md)
 
 [Release v1.0.0](https://github.com/DannyExperiments/smooth-nash-ci-surfaces/releases/tag/v1.0.0) · [Version DOI](https://doi.org/10.5281/zenodo.24569556)
+
+## Partial Lean verification
+
+For a two-by-two edge matrix over any field, the independent payoff equations identify all three row-base lines. Their intersections with the column-base lines consist precisely of the four coordinate axes and the checkerboard line in the affine cone. Generic smoothness, transversality, the remaining strata and the projective nonemptiness argument are in the manuscript. [Formal statement and replay](formal/closing/README.md)

@@ -1,5 +1,6 @@
 # Candidate inventory
 
+- `.github/workflows/lean.yml`
 - `.github/workflows/pdf.yml`
 - `.github/workflows/replay.yml`
 - `.github/workflows/verify.yml`
@@ -20,6 +21,12 @@
 - `STATUS.md`
 - `audits/public_safe_reports/LITERATURE_AUDIT.md`
 - `audits/public_safe_reports/MATHEMATICAL_AUDIT.md`
+- `formal/closing/Certificate.lean`
+- `formal/closing/README.md`
+- `formal/closing/lake-manifest.json`
+- `formal/closing/lakefile.toml`
+- `formal/closing/lean-toolchain`
+- `formal/closing/verify.py`
 - `paper/BUILD.md`
 - `paper/manuscript.pdf`
 - `paper/manuscript.tex`

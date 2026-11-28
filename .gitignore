@@ -8,3 +8,4 @@ __pycache__/
 *.out
 *.xdv
 release/evidence/
+/formal/closing/.lake/
